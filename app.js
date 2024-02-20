@@ -2,7 +2,11 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const jobDetailRouter = require("./router/jobDetailRouter");
-
+app.use(cors({
+  origin: ["http://localhost:5173","*"],
+  methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"], 
+  credentials:true
+}));
 
 app.use(express.json());
 app.use(bodyParser.json());
