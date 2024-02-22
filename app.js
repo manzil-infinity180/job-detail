@@ -3,21 +3,12 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require("body-parser");
 const jobDetailRouter = require("./router/jobDetailRouter");
-// app.use(cors({
-//   origin: ["https://frontend-anchors.onrender.com","http://localhost:5173","*"],
-//   methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"], 
-//   credentials:true
-// }));
-let corsOptions = {
-  origin: function (origin, callback) {
-    // db.loadOrigins is an example call to load
-    // a list of origins from a backing database
-    db.loadOrigins(function (error, origins) {
-      callback(error, origins)
-    })
-  }
-}
-app.use(cors(corsOptions));
+app.use(cors({
+  // origin: ["https://frontend-anchors.onrender.com","http://localhost:5173","*"],
+  origin: ["*"],
+  methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"], 
+  credentials:true
+}));
 
 
 app.use(express.json());
