@@ -80,3 +80,77 @@ exports.findById = async(req,res,next)=>{
           })
     }
 }
+
+exports.searchField = async(req,res,next)=>{
+  try{
+    console.log(req.params.search);
+    console.log(req.query.name);
+    let results = [];
+     results = await Job.aggregate([
+      { $search: {
+          index: 'default',
+          text: {
+            query: req.params.search,
+            path:["companyname","roleName"],
+            // path:{
+            //   wildcard:"*"
+            // },
+            fuzzy:{}
+          }
+        }
+      }
+    ]);
+    console.log(results);
+
+    res.status(200).json({
+      data : {results}
+    })
+
+  }catch(err){
+    
+    res.status(404).json({
+      status:"Failed",
+      data:{
+        err:err.message
+      }
+    })
+
+  }
+}
+exports.autoComplete = async(req,res,next)=>{
+  try{
+
+    let result = [];
+    results = await Job.aggregate([
+      {
+        '$search': {
+          'index': 'autoComplete', 
+          'autocomplete': {
+            'query': req.params.autocomplete, 
+            'path': "roleName",
+            "tokenOrder":"sequential"
+          }
+        }
+      }, {
+        '$limit': 10
+      }, {
+        '$project': {
+          'roleName': 1,
+        }
+      }
+    ])
+    
+    res.status(200).json({
+      status:"success",
+      data : {results}
+    })
+
+  }catch(err){
+    res.status(404).json({
+      status:"Failed",
+      data:{
+        err:err.message
+      }
+    })
+  }
+}
