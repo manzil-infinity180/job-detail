@@ -136,6 +136,7 @@ exports.autoComplete = async(req,res,next)=>{
       }, {
         '$project': {
           'roleName': 1,
+          'companyname': 1
         }
       }
     ])
