@@ -1,7 +1,7 @@
 const Job = require("../model/jobDetailModel");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
-
+const redisClient = require("../utils/redisConnect");
 
 const storage = multer.memoryStorage();
 const upload = multer({storage});
@@ -11,6 +11,12 @@ exports.uploadLogo = upload.single('logo');
 exports.getallJob = async(req,res,next)=>{
     try{
      const detail = await Job.find();
+     const key = req.originalUrl || req.url;
+    try{
+      await redisClient.set(key,JSON.stringify({data : detail}),'ex',5*60*60);
+    }catch(err){
+      console.error("Redis Error "+err);
+    }
 
         res.status(200).json({
             length:detail.length,

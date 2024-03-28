@@ -1,7 +1,7 @@
-const dotenv = require("dotenv");
-dotenv.config({path: "./config.env"});
-const mongoose = require("mongoose");
-const app = require("./app");
+const dotenv = require('dotenv');
+dotenv.config({path: './config.env'});
+const mongoose = require('mongoose');
+const app = require('./app');
 
 const port = process.env.PORT || 7007;
 const DB = process.env.DATABASE.replace('<PASSWORD>',process.env.PASSWORD);
@@ -13,3 +13,6 @@ mongoose.connect(DB).then(()=>{
 app.listen(port,()=>{
     console.log("Sever running on port "+port);
 });
+
+
+
