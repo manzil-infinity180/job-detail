@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require("body-parser");
 const jobDetailRouter = require("./router/jobDetailRouter");
 app.use(cors({
-  origin: ["https://frontend-anchors.onrender.com","http://localhost:5173","*","https://job-intern.vercel.app/",],
+  origin: ["https://frontend-anchors.onrender.com","http://localhost:5173","*"],
   // origin: ["*"],
   methods: ["GET,HEAD,PUT,PATCH,POST,DELETE"], 
   credentials:true
